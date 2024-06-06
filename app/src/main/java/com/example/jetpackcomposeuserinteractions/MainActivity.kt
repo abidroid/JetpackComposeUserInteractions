@@ -13,8 +13,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -91,7 +93,16 @@ fun MyLayout(name: String, modifier: Modifier = Modifier, snackbarHostState: Sna
         Button(onClick = {
 
             scope.launch {
-                snackbarHostState.showSnackbar("Hello, I am a Snackbar message!")
+                val result = snackbarHostState.showSnackbar(
+                    "Hello, I am a Snackbar message!",
+                    actionLabel = "Show Toast",
+                    duration = SnackbarDuration.Indefinite,
+                    withDismissAction = true
+                    )
+
+                if (result == SnackbarResult.ActionPerformed) {
+                    Toast.makeText(myContext, "Hello, I am a Toast message!", Toast.LENGTH_SHORT).show()
+                }
             }
         }) {
             Text(text = "Show Snackbar")
