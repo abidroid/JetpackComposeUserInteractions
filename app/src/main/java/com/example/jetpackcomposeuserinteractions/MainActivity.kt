@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -40,7 +41,17 @@ class MainActivity : ComponentActivity() {
                 val snackbarHostState = remember { SnackbarHostState() }
 
                 Scaffold(
-                    snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+                    snackbarHost = { SnackbarHost(hostState = snackbarHostState){
+                        // for styling snackbar
+                        Snackbar(snackbarData = it,
+                            containerColor = Color.Red,
+                            contentColor = Color.White,
+                            actionColor = Color.White,
+                            dismissActionContentColor = Color.White
+
+                            )
+
+                    } },
                     modifier = Modifier.fillMaxSize()) { innerPadding ->
 //                    Greeting(
 //                        name = "Android",
