@@ -129,14 +129,12 @@ fun MyLayout(name: String, modifier: Modifier = Modifier, snackbarHostState: Sna
 
         Spacer(modifier = Modifier.padding(16.dp))
         Button(onClick = {
-
             dialogStatus.value = true
-
-
         }) {
             Text(text = "Show Dialog")
         }
 
+        // Note: the scope of the dialog matters
         if (dialogStatus.value) {
             AlertDialog(
                 title = { Text(text = "Title") },
