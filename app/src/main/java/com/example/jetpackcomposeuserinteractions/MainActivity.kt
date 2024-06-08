@@ -11,8 +11,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
@@ -20,6 +28,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,10 +39,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.jetpackcomposeuserinteractions.ui.theme.JetpackComposeUserInteractionsTheme
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -41,7 +52,7 @@ class MainActivity : ComponentActivity() {
             JetpackComposeUserInteractionsTheme {
 
                 val snackbarHostState = remember { SnackbarHostState() }
-
+                val txt = remember { mutableStateOf("Hello World") }
                 Scaffold(
                     snackbarHost = {
                         SnackbarHost(hostState = snackbarHostState) {
@@ -57,18 +68,68 @@ class MainActivity : ComponentActivity() {
 
                         }
                     },
-                    modifier = Modifier.fillMaxSize()
-                ) { innerPadding ->
-//                    Greeting(
+                    modifier = Modifier.fillMaxSize(),
+
+                    topBar = {
+                        TopAppBar(
+                            title = { Text("Jetpack Compose User Interactions") },
+                            navigationIcon = {
+                                IconButton(onClick = {
+                                    txt.value = "Menu"
+                                }) {
+                                    Icon(imageVector = Icons.Filled.Menu, contentDescription = "Drawer")
+                                }
+                            },
+
+                            actions = {
+
+                                IconButton(onClick = {
+                                    txt.value = "Settings"
+                                }) {
+                                    Icon(imageVector = Icons.Filled.Settings, contentDescription = "Settings")
+                                }
+
+                                IconButton(onClick = {
+                                    txt.value = "Search"
+
+                                }) {
+                                    Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
+                                }
+
+                                IconButton(onClick = {
+                                    txt.value = "More"
+
+                                }) {
+                                    Icon(imageVector = Icons.Filled.MoreVert, contentDescription = "More")
+                                }
+                            }
+                        )
+                    },
+
+                    content = { innerPadding ->
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(innerPadding),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(text = txt.value, fontSize = 30.sp)
+                        }
+                    }
+                )
+
+//                { innerPadding ->
+////                    Greeting(
+////                        name = "Android",
+////                        modifier = Modifier.padding(innerPadding)
+////                    )
+//                    MyLayout(
 //                        name = "Android",
-//                        modifier = Modifier.padding(innerPadding)
+//                        modifier = Modifier.padding(innerPadding),
+//                        snackbarHostState = snackbarHostState
 //                    )
-                    MyLayout(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding),
-                        snackbarHostState = snackbarHostState
-                    )
-                }
+//                }
             }
         }
     }
