@@ -29,6 +29,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -72,7 +73,7 @@ class MainActivity : ComponentActivity() {
 
                     topBar = {
                         TopAppBar(
-                            title = { Text("Jetpack Compose User Interactions") },
+                            title = { Text("My App", color = Color.White) },
                             navigationIcon = {
                                 IconButton(onClick = {
                                     txt.value = "Menu"
@@ -102,7 +103,13 @@ class MainActivity : ComponentActivity() {
                                 }) {
                                     Icon(imageVector = Icons.Filled.MoreVert, contentDescription = "More")
                                 }
-                            }
+                            },
+
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = Color.Blue,
+                                actionIconContentColor = Color.White,
+                                navigationIconContentColor = Color.White
+                            )
                         )
                     },
 
