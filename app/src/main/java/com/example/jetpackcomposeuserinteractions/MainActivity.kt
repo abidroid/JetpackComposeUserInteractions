@@ -106,7 +106,7 @@ class MainActivity : ComponentActivity() {
 
                                 IconButton(onClick = {
                                     txt.value = "More"
-
+                                    menuStatus.value = true
                                 }) {
                                     Icon(imageVector = Icons.Filled.MoreVert, contentDescription = "More")
 
