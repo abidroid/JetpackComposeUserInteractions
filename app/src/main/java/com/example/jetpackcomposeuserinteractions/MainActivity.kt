@@ -1,6 +1,7 @@
 package com.example.jetpackcomposeuserinteractions
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,6 +19,8 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -54,6 +57,10 @@ class MainActivity : ComponentActivity() {
 
                 val snackbarHostState = remember { SnackbarHostState() }
                 val txt = remember { mutableStateOf("Hello World") }
+
+                val menuStatus = remember { mutableStateOf(false) }
+                val bgColor = remember { mutableStateOf(Color.White) }
+
                 Scaffold(
                     snackbarHost = {
                         SnackbarHost(hostState = snackbarHostState) {
@@ -102,6 +109,26 @@ class MainActivity : ComponentActivity() {
 
                                 }) {
                                     Icon(imageVector = Icons.Filled.MoreVert, contentDescription = "More")
+
+                                    DropdownMenu(expanded = menuStatus.value, onDismissRequest = {
+                                        menuStatus.value = false
+                                    }) {
+                                        DropdownMenuItem(text = { Text("Red") }, onClick = {
+                                            txt.value = "Red"
+                                            menuStatus.value = false
+                                            bgColor.value = Color.Red
+                                        })
+                                        DropdownMenuItem(text = { Text("Green") }, onClick = {
+                                            menuStatus.value = false
+                                            txt.value = "Green"
+                                            bgColor.value = Color.Green
+                                        })
+                                        DropdownMenuItem(text = { Text("Blue") }, onClick = {
+                                            menuStatus.value = false
+                                            txt.value = "Blue"
+                                            bgColor.value = Color.Blue
+                                        })
+                                    }
                                 }
                             },
 
@@ -117,7 +144,8 @@ class MainActivity : ComponentActivity() {
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(innerPadding),
+                                .padding(innerPadding)
+                                .background(color = bgColor.value),
                             verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
